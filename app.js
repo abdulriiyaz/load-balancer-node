@@ -1,12 +1,13 @@
 import express from "express";
 import volleyball from "volleyball";
+import process, { argv } from "process";
 
 const app = express();
 
 app.use(volleyball);
 
 app.get("/", (req, res) => {
-    res.send("<h1>🦄🌈✨Hello World! 🌈✨🦄</h1>");
+    res.send(`<h1>🦄🌈✨Hello World! 🌈✨🦄</h1><br>${process.pid}`);
 });
 
 function notFound(req, res, next) {
@@ -26,7 +27,7 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || Number(process.argv[2]);
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`, port);
 });
